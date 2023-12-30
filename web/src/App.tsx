@@ -1,11 +1,14 @@
-import { useState } from 'react'
-import './App.css'
+
+import Converter from './components/Converter'
+import Navbar from './components/Navbar'
 
 function App() {
 
   return (
     <>
-      <h1 className="text-7xl">Hello Geeks</h1>
+      <Navbar />
+      <Converter />
+
     </>
   )
 }

@@ -3,6 +3,23 @@
 @tailwind utilities;
 
 body {
-  @apply bg-neutral-800;
-  @apply text-neutral-50;
+  @apply bg-gray-900;
+  @apply text-white;
+}
+
+.form-field-heading {
+  @apply text-xl;
+  @apply font-semibold;
+
+}
+
+.default-border {
+  @apply border-neutral-500;
+  border-width: 0.5px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
