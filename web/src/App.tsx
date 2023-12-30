@@ -1,13 +1,15 @@
 
-import Converter from './components/Converter'
-import Navbar from './components/Navbar'
+import { Navbar, ConverterSkeleton, Converter } from './components';
+import useGetCurrencies from './hooks/useGetCurrencies';
 
 function App() {
+
+  const coinsAndCurrencies = useGetCurrencies();
 
   return (
     <>
       <Navbar />
-      <Converter />
+      {coinsAndCurrencies ? <Converter coinsAndCurrencies={coinsAndCurrencies} /> : <ConverterSkeleton />}
 
     </>
   )
