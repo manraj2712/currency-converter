@@ -15,9 +15,10 @@ function App() {
           duration: 2000,
         }}
       />
-      <Navbar />
-      {coinsAndCurrencies ? <Converter coinsAndCurrencies={coinsAndCurrencies} /> : <ConverterSkeleton />}
-
+      <div className='h-full'>
+        <Navbar />
+        {coinsAndCurrencies ? <Converter coinsAndCurrencies={coinsAndCurrencies} /> : <ConverterSkeleton />}
+      </div>
     </>
   )
 }

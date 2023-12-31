@@ -1,7 +1,7 @@
 const Navbar = () => {
 
     return (
-        <div className='shadow-md w-full fixed top-0 left-0'>
+        <div className='shadow-md w-full h-[56px]'>
             <div className='md:flex items-center justify-between bg-gray-900 py-4 px-2 md:px-10 sm:px-7' style={{
                 borderBottom: '0.5px solid rgb(55, 65, 81)'
             }}>

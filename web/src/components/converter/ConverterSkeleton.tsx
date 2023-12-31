@@ -2,7 +2,7 @@ import { ArrowsRightLeftIcon, ChevronDownIcon } from '@heroicons/react/16/solid'
 
 function ConverterSkeleton() {
     return (
-        <div className='flex justify-center mt-20 h-[calc(100vh-80px)] items-center overflow-auto'>
+        <div className='flex justify-center pt-20 h-[calc(100vh-56px)] items-center'>
             <div className='bg-gray-800 rounded-md default-border w-full max-w-[600px] p-3 pt-5'>
                 <div className='animate-pulse'>
                     <div className='flex justify-between'>

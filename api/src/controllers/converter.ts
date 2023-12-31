@@ -1,4 +1,4 @@
-import { CustomError, coingeckoHeaders } from "../utils";
+import { CustomError, coingeckoApiUrl, coingeckoHeaders } from "../utils";
 import { BigPromise } from "../middlewares";
 import axios from "axios";
 
@@ -49,14 +49,12 @@ import axios from "axios";
  *         description: Internal Server Error
  */
 
-
-
 export const convertTokenToCurrencyController = BigPromise(
   async (req, res, next) => {
     const { from, to, amount } = req.params;
 
     const response = await axios.get(
-      `https://api.coingecko.com/api/v3/simple/price?ids=${from.toLowerCase()}&vs_currencies=${to.toLowerCase()}`,
+      `${coingeckoApiUrl}/simple/price?ids=${from.toLowerCase()}&vs_currencies=${to.toLowerCase()}`,
       {
         headers: coingeckoHeaders,
       }
@@ -108,19 +106,22 @@ export const convertTokenToCurrencyController = BigPromise(
  *         description: Internal Server Error
  */
 
-
 export const getCurrenciesController = BigPromise(async (req, res, next) => {
+  const getCoinParams = {
+    vs_currency: "usd",
+    order: "market_cap_desc",
+    per_page: 100,
+    page: 1,
+    locale: "en",
+  };
   const response = await Promise.all([
-    axios.get(
-      "https://api.coingecko.com/api/v3/simple/supported_vs_currencies",
-      {
-        headers: coingeckoHeaders,
-      }
-    ),
+    axios.get(`${coingeckoApiUrl}/simple/supported_vs_currencies`, {
+      headers: coingeckoHeaders,
+    }),
 
     // fetching top 100 coins by market cap
     axios.get(
-      "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&locale=en",
+      `${coingeckoApiUrl}/coins/markets?vs_currency=${getCoinParams.vs_currency}&order=${getCoinParams.order}&per_page=${getCoinParams.per_page}&page=${getCoinParams.page}&locale=${getCoinParams.locale}`,
       {
         headers: coingeckoHeaders,
       }

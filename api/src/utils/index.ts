@@ -1,4 +1,4 @@
-import { coingeckoHeaders } from "./coingecko";
+import { coingeckoHeaders, coingeckoApiUrl } from "./coingecko";
 import { CustomError } from "./customError";
 
-export { coingeckoHeaders, CustomError };
+export { coingeckoHeaders, coingeckoApiUrl, CustomError };
