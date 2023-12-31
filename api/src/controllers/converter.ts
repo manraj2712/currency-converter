@@ -1,4 +1,9 @@
-import { CustomError, coingeckoApiUrl, coingeckoHeaders } from "../utils";
+import {
+  CustomError,
+  coingeckoApiUrl,
+  coingeckoHeaders,
+  validateConversionInput,
+} from "../utils";
 import { BigPromise } from "../middlewares";
 import axios from "axios";
 
@@ -53,6 +58,8 @@ export const convertTokenToCurrencyController = BigPromise(
   async (req, res, next) => {
     const { from, to, amount } = req.params;
 
+    validateConversionInput({ from, to, amount });
+
     const response = await axios.get(
       `${coingeckoApiUrl}/simple/price?ids=${from.toLowerCase()}&vs_currencies=${to.toLowerCase()}`,
       {
@@ -60,7 +67,14 @@ export const convertTokenToCurrencyController = BigPromise(
       }
     );
 
-    const result = response.data[from][to] * parseFloat(amount);
+    const responseData = response.data;
+
+    // Checking for API response validity
+    if (!responseData || !responseData[from] || !responseData[from][to]) {
+      throw new CustomError("Invalid response from the external API", 500);
+    }
+
+    const result = responseData[from][to] * parseFloat(amount);
 
     return res.status(200).json({
       conversion: result,
@@ -114,12 +128,11 @@ export const getCurrenciesController = BigPromise(async (req, res, next) => {
     page: 1,
     locale: "en",
   };
-  const response = await Promise.all([
+
+  const [supportedCurrenciesResponse, topCoinsResponse] = await Promise.all([
     axios.get(`${coingeckoApiUrl}/simple/supported_vs_currencies`, {
       headers: coingeckoHeaders,
     }),
-
-    // fetching top 100 coins by market cap
     axios.get(
       `${coingeckoApiUrl}/coins/markets?vs_currency=${getCoinParams.vs_currency}&order=${getCoinParams.order}&per_page=${getCoinParams.per_page}&page=${getCoinParams.page}&locale=${getCoinParams.locale}`,
       {
@@ -128,21 +141,35 @@ export const getCurrenciesController = BigPromise(async (req, res, next) => {
     ),
   ]);
 
-  if (response[0].status !== 200 || response[1].status !== 200) {
-    return next(new CustomError("Something went wrong", 500));
+  if (
+    supportedCurrenciesResponse.status !== 200 ||
+    topCoinsResponse.status !== 200
+  ) {
+    throw new CustomError("Something went wrong", 500);
   }
 
-  const currencies = await response[0].data;
-  const coins = await response[1].data;
+  const supportedCurrencies = supportedCurrenciesResponse.data;
+  const topCoins = topCoinsResponse.data;
 
-  const coinsWithLogo = coins.map((coin: any) => {
-    return {
+  if (
+    !supportedCurrencies ||
+    !topCoins ||
+    !Array.isArray(supportedCurrencies) ||
+    !Array.isArray(topCoins)
+  ) {
+    throw new CustomError("Invalid response from the external API", 500);
+  }
+
+  const coinsWithLogo = topCoins.map(
+    (coin: { id: string; name: string; symbol: string; image: string }) => ({
       id: coin.id,
       name: coin.name,
       symbol: coin.symbol,
       image: coin.image,
-    };
-  });
+    })
+  );
 
-  return res.status(200).json({ currencies, coins: coinsWithLogo });
+  return res
+    .status(200)
+    .json({ currencies: supportedCurrencies, coins: coinsWithLogo });
 });

@@ -25,7 +25,7 @@ const options = {
     },
     servers: [
       {
-        url: process.env.PROD_API_URL,
+        url: process.env.PROD_API_URL!,
         name: "Production",
       },
       {
@@ -53,8 +53,10 @@ app.use("/api", converterRouter);
 
 app.use(ErrorHandler);
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`Server is up and running at ${port} 🔥`);
 });
 
 export default app;
+
+export { server };

@@ -15,9 +15,11 @@ function App() {
           duration: 2000,
         }}
       />
-      <div className='h-full'>
+      <div className='min-h-screen flex flex-col'>
         <Navbar />
-        {coinsAndCurrencies ? <Converter coinsAndCurrencies={coinsAndCurrencies} /> : <ConverterSkeleton />}
+        <div className='flex-grow'>
+          {coinsAndCurrencies ? <Converter coinsAndCurrencies={coinsAndCurrencies} /> : <ConverterSkeleton />}
+        </div>
       </div>
     </>
   )
