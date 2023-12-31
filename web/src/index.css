@@ -26,7 +26,6 @@ input::-webkit-inner-spin-button {
 .glow-button {
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 8px;
-  padding: 10px;
   text-align: center;
   transition: background-color 0.5s ease;
   box-shadow: 0 0 10px rgba(0, 255, 0, 0.8);

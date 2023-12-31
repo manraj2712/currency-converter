@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Coin } from '../../types/coins';
-import { SelectButton, SearchBar, ConvertButton } from '../../components';
+import { SelectButton, SearchBar, ConvertButton, InputBox } from '../../components';
 
 function Converter({ coinsAndCurrencies: { coins, currencies } }: { coinsAndCurrencies: { coins: Coin[], currencies: string[] } }) {
     const [openCoinSearch, setOpenCoinSearch] = useState(false);
@@ -23,7 +23,7 @@ function Converter({ coinsAndCurrencies: { coins, currencies } }: { coinsAndCurr
     };
 
     return (
-        <div className='flex justify-center mt-20 items-center'>
+        <div className='flex justify-center mt-20 items-center h-[calc(100vh-80px)] overflow-auto'>
             <div className='bg-gray-800 rounded-md default-border w-full max-w-[600px] p-3 pt-5'>
                 {openCoinSearch && !openCurrencySearch && (
                     <SearchBar
@@ -68,12 +68,8 @@ function Converter({ coinsAndCurrencies: { coins, currencies } }: { coinsAndCurr
                             />
                         </div>
                         <div className='flex mt-5 space-x-2'>
-                            <input type="number" placeholder="Enter a value" value={fromAmount == 0 ? '' : fromAmount} className={`bg-gray-800 w-full p-2 outline-none`} onChange={(e) => {
-                                setFromAmount(Number(e.target.value));
-                            }} />
-                            <input type="number" value={toAmount == 0 ? '' : toAmount} className={`bg-gray-800 w-full p-2 outline-none`} onChange={(e) => {
-                                setToAmount(Number(e.target.value));
-                            }} />
+                            <InputBox amount={fromAmount} onAmountChange={setFromAmount} placeholder='Enter a value' />
+                            <InputBox amount={toAmount} onAmountChange={setToAmount} isDisabled />
                         </div>
                     </div>
                 </div>
