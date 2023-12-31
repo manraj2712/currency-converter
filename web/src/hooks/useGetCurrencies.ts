@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import { API_URL } from "../constants";
+import { PROD_API_URL } from "../constants";
 import { Coin } from "../types/coins";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 function useGetCurrencies() {
   const [data, setData] = useState<{
@@ -9,15 +11,14 @@ function useGetCurrencies() {
   } | null>(null);
 
   useEffect(() => {
-    console.log("called api");
-    fetch(`${API_URL}/get-currencies`, {
-      method: "GET",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setData(data);
+    axios
+      .get(`${PROD_API_URL}/get-currencies`)
+      .then((response) => {
+        console.log(`${PROD_API_URL}/get-currencies`);
+        setData(response.data);
       })
       .catch((error) => {
+        toast.error("Error fetching currencies");
         console.error(error);
       });
   }, []);

@@ -1,7 +1,8 @@
 import { Coin, ConversionResult } from '../../types';
 import { CtaButton } from '..';
 import { useState } from 'react';
-import { API_URL } from '../../constants';
+import { PROD_API_URL } from '../../constants';
+import toast from 'react-hot-toast';
 
 function ConvertButton({ fromAmount, fromCoin, toCurrency, onConvert }: { fromAmount: number, fromCoin: Coin, toCurrency: string, onConvert: (e: number) => void }) {
     const [loading, setLoading] = useState(false);
@@ -10,7 +11,7 @@ function ConvertButton({ fromAmount, fromCoin, toCurrency, onConvert }: { fromAm
             <CtaButton className='uppercase' text={loading ? "Calculating..." : `Convert ${fromCoin.symbol} to ${toCurrency}`} onpress={() => {
                 if (loading || fromAmount <= 0) return;
                 setLoading(true);
-                fetch(`${API_URL}/convert/${fromCoin.id}/${toCurrency}/${fromAmount}`, {
+                fetch(`${PROD_API_URL}/convert/${fromCoin.id}/${toCurrency}/${fromAmount}`, {
                     method: 'GET',
                 }).then((res) => {
                     if (res.status === 200) {
@@ -20,6 +21,7 @@ function ConvertButton({ fromAmount, fromCoin, toCurrency, onConvert }: { fromAm
                     }
                 }).catch((err) => {
                     console.log(err);
+                    toast.error(err);
                 }
                 ).finally(() => {
                     setLoading(false);
