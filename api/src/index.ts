@@ -25,7 +25,7 @@ const options = {
     },
     servers: [
       {
-        url: "https://currency-converter-gtp4jrn7b-manrajs-projects.vercel.app",
+        url: process.env.PROD_API_URL,
         name: "Production",
       },
       {
@@ -33,7 +33,6 @@ const options = {
         name: "Development",
       },
     ],
-    "x-server-names": ["Production", "Development"],
   },
   apis: ["./src/controllers/*.ts"],
 };

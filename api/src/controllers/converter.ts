@@ -30,11 +30,26 @@ import axios from "axios";
  *     responses:
  *       '200':
  *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 conversion:
+ *                   type: number
+ *                 from:
+ *                   type: string
+ *                 to:
+ *                   type: string
+ *                 amount:
+ *                   type: number
  *       '400':
  *         description: Bad Request
  *       '500':
  *         description: Internal Server Error
  */
+
+
 
 export const convertTokenToCurrencyController = BigPromise(
   async (req, res, next) => {
@@ -67,9 +82,32 @@ export const convertTokenToCurrencyController = BigPromise(
  *     responses:
  *       '200':
  *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 currencies:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                 coins:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: string
+ *                       name:
+ *                         type: string
+ *                       symbol:
+ *                         type: string
+ *                       image:
+ *                         type: string
  *       '500':
  *         description: Internal Server Error
  */
+
 
 export const getCurrenciesController = BigPromise(async (req, res, next) => {
   const response = await Promise.all([
