@@ -40,7 +40,11 @@ const options = {
 
 const specs = swaggerJsDoc(options);
 
-app.use("/", swaggerUi.serve, swaggerUi.setup(specs));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
+
+app.get("/", (req, res) => {
+  res.redirect("/api-docs");
+});
 
 app.get("/api", (req, res) => {
   res.status(200).json("Welcome to the Crypto Converter API");
