@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Coin } from '../../types/coins';
-import { SelectButton, SearchBar, InputBox, ConvertButton } from '../../components';
+import { SelectButton, SearchBar, ConvertButton } from '../../components';
 
 function Converter({ coinsAndCurrencies: { coins, currencies } }: { coinsAndCurrencies: { coins: Coin[], currencies: string[] } }) {
     const [openCoinSearch, setOpenCoinSearch] = useState(false);
