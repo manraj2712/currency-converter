@@ -23,7 +23,7 @@ function Converter({ coinsAndCurrencies: { coins, currencies } }: { coinsAndCurr
     };
 
     return (
-        <div className='flex justify-center items-center h-full px-1 py-4 pt-52 sm:pt-28  overflow-auto'>
+        <div className='flex flex-col flex-grow justify-center items-center h-full px-1 py-4 overflow-auto'>
             <div className='bg-gray-800 rounded-md default-border w-full max-w-[600px] p-3 pt-5'>
                 {openCoinSearch && !openCurrencySearch && (
                     <SearchBar
