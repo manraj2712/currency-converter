@@ -16,7 +16,13 @@ Hosted on Digital Ocean VPS : [**Live**](https://manraj.in.net)
    yarn install
     ```
    
-2. **Start Server:**
+2. **Run Tests:**
+   ```bash
+   yarn build
+   yarn test
+    ```
+   
+3. **Start Server:**
    ```bash
    yarn dev
     ```
