@@ -48,7 +48,7 @@ function Converter({ coinsAndCurrencies: { coins, currencies } }: { coinsAndCurr
                         <p className='form-field-heading'>From</p>
                         <p className='form-field-heading'>To</p>
                     </div>
-                    <div className='bg-gray-900 py-2 px-2 mt-3'>
+                    <div className='bg-gray-900 py-2 px-3 pt-5 mt-6 rounded-lg'>
                         <div className='flex w-full rounded-md justify-between items-center'>
                             <SelectButton
                                 imageUrl={fromCoin.image}
@@ -58,7 +58,7 @@ function Converter({ coinsAndCurrencies: { coins, currencies } }: { coinsAndCurr
                                     setOpenCoinSearch(!openCoinSearch);
                                 }}
                             />
-                            <div className='h-9 w-[1px] bg-gray-700 mr-6'></div>
+                            <div className='h-10 w-[2px] bg-gray-600 mr-2'></div>
                             <SelectButton
                                 value={toCurrency}
                                 onClick={() => {
@@ -67,7 +67,7 @@ function Converter({ coinsAndCurrencies: { coins, currencies } }: { coinsAndCurr
                                 }}
                             />
                         </div>
-                        <div className='flex mt-5 space-x-2'>
+                        <div className='flex mt-10 mb-4 space-x-2'>
                             <InputBox amount={fromAmount} onAmountChange={setFromAmount} placeholder='Enter a value' />
                             <InputBox amount={toAmount} onAmountChange={setToAmount} isDisabled />
                         </div>
