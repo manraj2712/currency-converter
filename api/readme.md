@@ -7,6 +7,7 @@ Hosted on Digital Ocean VPS : [**Live**](https://manraj.in.net)
 
 - **Backend:** Node.js and Express.js
 - **Language:** TypeScript
+- **Input Validation:** Zod
 - **Reverse Proxy:** Nginx
 - **Process Manageer:** PM2
 

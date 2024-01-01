@@ -2,11 +2,11 @@ import {
   CustomError,
   coingeckoApiUrl,
   coingeckoHeaders,
-  validateConversionInput,
 } from "../utils";
 import { BigPromise } from "../middlewares";
 import axios from "axios";
-
+import { z } from "zod";
+import { convertTokenToCurrencyInput } from "../zod";
 /**
  * @swagger
  * /api/convert/{from}/{to}/{amount}:
@@ -58,8 +58,16 @@ export const convertTokenToCurrencyController = BigPromise(
   async (req, res, next) => {
     const { from, to, amount } = req.params;
 
-    validateConversionInput({ from, to, amount });
+    const parsedAmount = parseFloat(amount);
 
+    // zod vlaidation
+    convertTokenToCurrencyInput.parse({
+      from,
+      to,
+      amount: parsedAmount,
+    });
+
+    
     const response = await axios.get(
       `${coingeckoApiUrl}/simple/price?ids=${from.toLowerCase()}&vs_currencies=${to.toLowerCase()}`,
       {
