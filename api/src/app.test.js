@@ -30,6 +30,5 @@ describe("GET /api/convert/:from/:to/:amount", () => {
 });
 
 afterAll((done) => {
-  // Assuming app.close is asynchronous, use a callback
   server.close(done);
 });
