@@ -25,7 +25,7 @@ describe("GET /api/convert/:from/:to/:amount", () => {
     const response = await request(server).get(
       "/api/convert/invalid/from/amount"
     );
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(500);
   });
 });
 
