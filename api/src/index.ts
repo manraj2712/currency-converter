@@ -2,9 +2,11 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import converterRouter from "./routes/converter";
+import devCanvasRouter from "./routes/devCanvas";
 import { ErrorHandler } from "./middlewares";
 import swaggerUi from "swagger-ui-express";
 import swaggerJsDoc from "swagger-jsdoc";
+import mongoose from "mongoose";
 
 dotenv.config();
 const app = express();
@@ -14,6 +16,11 @@ const port = process.env.PORT || 3000;
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(express.json());
+
+// connect to mongodb
+mongoose.connect(process.env.MONGO_URL!).then(() => {
+  console.log("Connected to MongoDB 🔥");
+});
 
 const options = {
   definition: {
@@ -50,6 +57,8 @@ app.get("/api", (req, res) => {
 });
 
 app.use("/api", converterRouter);
+
+app.use("/api/dev-canvas", devCanvasRouter);
 
 app.use(ErrorHandler);
 
